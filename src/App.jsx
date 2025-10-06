@@ -7,6 +7,7 @@ import OutfitGenerator from "./generate Outfit/genOutfitFlow";
 import DashboardApp from "./dashboard";
 import CalApp from "./calendar/App";
 import WelcomePage from "./assets/welcome";
+import PricingPlans from "./subscription/subscription";
 
 
 function App() {
@@ -19,6 +20,7 @@ function App() {
         <Route path="/generate-outfit" element={<OutfitGenerator/>}/>
         <Route path="/welcome" element={<WelcomePage/>}/>
         <Route path="/" element={<DashboardApp/>}/>
+        <Route path="/premium" element={<PricingPlans/>}/>
         <Route path="/calendar" element={<CalApp/>}/>
       </Routes>
     </Router>

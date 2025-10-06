@@ -1386,64 +1386,101 @@ function getGridClass(imageCount) {
 
 
       </main>
+{/* Bottom Navigation - Sleek Apple-inspired UI */}
+<nav className="fixed bottom-0 left-0 right-0 safe-area-bottom bg-dark-navy/90 backdrop-blur-xl border-t border-white/10 px-4 pt-2 pb-3">
+  {/* Style Creds Display - Hidden in Chat Mode */}
+  {activeTab !== 'explore' && (
+    <div className="flex justify-center mb-2">
+      <div className="bg-gradient-to-r from-cyan-500/10 to-pink-500/10 border border-cyan-500/30 rounded-full px-4 py-1.5 flex items-center space-x-2 shadow-[0_0_10px_rgba(0,255,255,0.1)]">
+        <Coins className="w-4 h-4 text-cyan-400" />
+        <span className="text-cyan-400 font-semibold text-sm tracking-wide">
+          {formatStyleCreds(streakInfo?.credits || 0)} Style Creds
+        </span>
+      </div>
+    </div>
+  )}
 
-      {/* Bottom Navigation - Improved spacing and organization */}
-      <nav className="fixed bottom-0 left-0 right-0 safe-area-bottom bg-dark-navy/95 backdrop-blur-sm border-t border-slate-700/50 px-4 py-2">
-        {/* Style Creds Display - Hidden when in chat mode */}
-        {activeTab !== 'explore' && (
-        <div className="flex justify-center items-center mb-2">
-  <div className="bg-gradient-to-r from-cyan-500/10 to-pink-500/10 border border-cyan-500/30 rounded-full px-4 py-1 flex items-center space-x-2">
-    <Coins className="w-4 h-4 text-cyan-400" />
-    <span className="text-cyan-400 font-semibold text-sm">
-      {formatStyleCreds(streakInfo?.credits || 0)} Style Creds
-    </span>
+  {/* Navigation Items */}
+  <div className="flex justify-between items-center max-w-md mx-auto">
+    {/* Home */}
+    <button 
+      onClick={() => handleTabClick('home')}
+      className={`flex flex-col items-center transition-colors duration-200 ${
+        activeTab === 'home' ? 'text-electric-cyan' : 'text-slate-400 hover:text-slate-300'
+      }`}
+    >
+      <Home className="w-6 h-6 mb-0.5" />
+      <span className="text-[11px] font-medium">Home</span>
+    </button>
+
+    {/* Closet */}
+    <button 
+      onClick={() => handleTabClick('closet')}
+      className={`flex flex-col items-center transition-colors duration-200 ${
+        activeTab === 'closet' ? 'text-hot-pink' : 'text-slate-400 hover:text-slate-300'
+      }`}
+    >
+      <Shirt className="w-6 h-6 mb-0.5" />
+      <span className="text-[11px] font-medium">Closet</span>
+    </button>
+
+    {/* Chat */}
+    <button 
+      onClick={() => handleTabClick('explore')}
+      className={`flex flex-col items-center transition-colors duration-200 ${
+        activeTab === 'explore' ? 'text-electric-cyan' : 'text-slate-400 hover:text-slate-300'
+      }`}
+    >
+      <MessageCircle className="w-6 h-6 mb-0.5" />
+      <span className="text-[11px] font-medium">Chat</span>
+    </button>
+
+    {/* Outfit */}
+    <button 
+      onClick={() => nav("/generate-outfit")}
+      className={`flex flex-col items-center transition-colors duration-200 ${
+        activeTab === 'shop' ? 'text-hot-pink' : 'text-slate-400 hover:text-slate-300'
+      }`}
+    >
+      <Plus className="w-6 h-6 mb-0.5" />
+      <span className="text-[11px] font-medium">Outfit</span>
+    </button>
+
+    {/* Shop */}
+    <button 
+      onClick={() => handleTabClick('shop')}
+      className={`flex flex-col items-center transition-colors duration-200 ${
+        activeTab === 'shop' ? 'text-hot-pink' : 'text-slate-400 hover:text-slate-300'
+      }`}
+    >
+      <ShoppingBag className="w-6 h-6 mb-0.5" />
+      <span className="text-[11px] font-medium">Shop</span>
+    </button>
+
+    {/* Calendar */}
+    <button 
+      onClick={() => handleTabClick('calendar')}
+      className={`flex flex-col items-center transition-colors duration-200 ${
+        activeTab === 'calendar' ? 'text-electric-cyan' : 'text-slate-400 hover:text-slate-300'
+      }`}
+    >
+      <Calendar className="w-6 h-6 mb-0.5" />
+      <span className="text-[11px] font-medium">Calendar</span>
+    </button>
+
+    {/* Premium */}
+    <button 
+      onClick={() => nav("/premium")}
+      className={`flex flex-col items-center transition-colors duration-200 ${
+        activeTab === 'premium' ? 'text-hot-pink' : 'text-slate-400 hover:text-slate-300'
+      }`}
+    >
+      <Crown className="w-6 h-6 mb-0.5" />
+      <span className="text-[11px] font-medium">Premium</span>
+    </button>
   </div>
-</div>
+</nav>
 
-        )}
-        
-        <div className="flex justify-center items-center max-w-md mx-auto">
-          <button 
-            onClick={() => handleTabClick('home')}
-            className={`nav-item nav-item-edge-left nav-item-blue ${activeTab === 'home' ? 'text-electric-cyan' : 'text-slate-400'}`}
-          >
-            <Home className="w-6 h-6 mb-1" />
-            <span className="text-xs font-medium">Home</span>
-          </button>
-          
-          <button 
-            onClick={() => handleTabClick('closet')}
-            className={`nav-item nav-item-center nav-item-pink ${activeTab === 'closet' ? 'text-hot-pink' : 'text-slate-400'}`}
-          >
-            <Shirt className="w-6 h-6 mb-1" />
-            <span className="text-xs font-medium">Closet</span>
-          </button>
-          
-          <button 
-            onClick={() => handleTabClick('explore')}
-            className={`nav-item nav-item-center nav-item-blue ${activeTab === 'explore' ? 'text-electric-cyan' : 'text-slate-400'}`}
-          >
-            <MessageCircle className="w-6 h-6 mb-1" />
-            <span className="text-xs font-medium">Chat</span>
-          </button>
-          
-          <button 
-            onClick={() => handleTabClick('shop')}
-            className={`nav-item nav-item-center nav-item-pink ${activeTab === 'shop' ? 'text-hot-pink' : 'text-slate-400'}`}
-          >
-            <ShoppingBag className="w-6 h-6 mb-1" />
-            <span className="text-xs font-medium">Shop</span>
-          </button>
-          
-          <button 
-            onClick={() => handleTabClick('calendar')}
-            className={`nav-item nav-item-edge-right nav-item-blue ${activeTab === 'calendar' ? 'text-electric-cyan' : 'text-slate-400'}`}
-          >
-            <Calendar className="w-6 h-6 mb-1" />
-            <span className="text-xs font-medium">Calendar</span>
-          </button>
-        </div>
-      </nav>
 
       {/* Daily Check-in Modal */}
       <DailyCheckin
