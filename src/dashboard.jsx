@@ -435,6 +435,15 @@ function DashboardApp() {
     localStorage.setItem('userStyleData', JSON.stringify(userData));
   }, [userData]);
 
+    useEffect(() => {
+    // Redirect to /register if token is not in localStorage
+    const token = localStorage.getItem('token');
+    if (!token) {
+      nav('/register');
+    }
+  }, [nav]);
+
+
 // Function to update streak (called when user completes daily styling)
 const updateStreak = () => {
   const today = new Date().toDateString();
