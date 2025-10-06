@@ -18,7 +18,7 @@ function App() {
         <Route path="/upload-cloths" element={<ClothingUpload/>}/>
         <Route path="/generate-outfit" element={<OutfitGenerator/>}/>
         <Route path="/welcome" element={<WelcomePage/>}/>
-        <Route path="/" element={<DashboardApp/>}/>
+        <Route path="/" element={<WelcomePage/>}/>
         <Route path="/calendar" element={<CalApp/>}/>
       </Routes>
     </Router>
