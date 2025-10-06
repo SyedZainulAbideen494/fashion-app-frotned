@@ -72,7 +72,7 @@ function DashboardApp() {
   // This keeps track of which screen the user is currently viewing
   // Can be: 'home', 'calendar', 'explore' (chat), etc.
   const [activeTab, setActiveTab] = useState('home');
-  
+  const nav = useNavigate()
   // This stores the current weather information
   // Used to suggest appropriate outfits based on weather
   const [weather, setWeather] = useState({ 
@@ -103,6 +103,13 @@ function DashboardApp() {
     return getDefaultUserData();
   });
 
+  useEffect(() => {
+    // Redirect to /register if token is not in localStorage
+    const token = localStorage.getItem('token');
+    if (!token) {
+      nav('/register');
+    }
+  }, [nav]);
   // Force update userData when code changes during HMR
   useEffect(() => {
     if (import.meta.hot) {
@@ -433,16 +440,10 @@ function DashboardApp() {
   // Save user data whenever it changes
   useEffect(() => {
     localStorage.setItem('userStyleData', JSON.stringify(userData));
+    
   }, [userData]);
 
-    useEffect(() => {
-    // Redirect to /register if token is not in localStorage
-    const token = localStorage.getItem('token');
-    if (!token) {
-      nav('/register');
-    }
-  }, [nav]);
-
+  
 
 // Function to update streak (called when user completes daily styling)
 const updateStreak = () => {
@@ -516,7 +517,6 @@ const updateStreak = () => {
       navigator.vibrate(50);
     }
   };
-  const nav = useNavigate()
   const handleFeatureClick = (feature) => {
     // Dopamine trigger - satisfying click animation
     if (navigator.vibrate) {
