@@ -1,0 +1,26 @@
+/* SuccessMessage.css */
+
+.success-message-sucess-modal {
+    position: fixed; /* Position relative to the viewport */
+    top: 50%; /* Center vertically */
+    left: 50%; /* Center horizontally */
+    transform: translate(-50%, -50%) scale(0.5); /* Start smaller for pop effect */
+    background-color: rgba(0, 0, 0, 0.8); /* Semi-transparent black background */
+    color: white; /* Text color */
+    padding: 10px 10px; /* Padding for aesthetics */
+    font-size: 12px;
+    border-radius: 8px; /* Rounded corners */
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5); /* Shadow for depth */
+    z-index: 1000; /* Ensure it's above other elements */
+    transition: opacity 0.3s ease, transform 0.3s cubic-bezier(0.25, 1.0, 0.5, 1.0); /* Smooth transition */
+}
+
+.show__message__success__modal {
+    opacity: 1; /* Fade in effect */
+    transform: translate(-50%, -50%) scale(1.1); /* Scale up with a slight bounce */
+}
+
+.hide__message__success__modal {
+    opacity: 0; /* Fade out effect */
+    transform: translate(-50%, -60%) scale(0.5); /* Scale down and move up */
+}

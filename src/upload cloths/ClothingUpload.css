@@ -1,0 +1,208 @@
+/* Core Layout */
+.container__upload__page_New {
+  max-width: 400px;
+  margin: 60px auto;
+  padding: 30px 24px;
+  background: rgba(20, 20, 20, 0.9);
+  border-radius: 20px;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.2);
+  backdrop-filter: blur(20px);
+  color: #efefef;
+  font-family: 'SF Pro Display', 'Inter', sans-serif;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  transition: all 0.3s ease;
+}
+
+/* Title */
+.title__upload__page_New {
+  text-align: center;
+  font-size: 20px;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+  color: #fff;
+}
+
+/* Upload Label */
+.uploadLabel__upload__page_New {
+  background: #1f1f1f;
+  padding: 14px;
+  border-radius: 14px;
+  text-align: center;
+  cursor: pointer;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border: 1px solid #333;
+  transition: all 0.25s ease;
+}
+.uploadLabel__upload__page_New:hover {
+  background: #2c2c2c;
+  transform: scale(1.02);
+}
+.fileInput__upload__page_New {
+  display: none;
+}
+
+/* Hashtag Input */
+.hashtagInput__upload__page_New {
+  padding: 12px 14px;
+  font-size: 13px;
+  background-color: #1a1a1a;
+  color: #fff;
+  border-radius: 12px;
+  border: 1px solid #333;
+  transition: all 0.2s;
+}
+.hashtagInput__upload__page_New::placeholder {
+  color: #777;
+}
+
+/* Previous Tags */
+.previousTags__upload__page_New {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.tagHeader__upload__page_New {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.tagLabel__upload__page_New {
+  font-weight: 500;
+  font-size: 14px;
+}
+.infoLink__upload__page_New {
+  color: #60a5fa;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 12px;
+  transition: opacity 0.2s ease;
+}
+.infoLink__upload__page_New:hover {
+  opacity: 0.8;
+}
+
+.tagButtons__upload__page_New {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.tagBtn__upload__page_New {
+  padding: 8px 12px;
+  font-size: 13px;
+  background: #1c1c1c;
+  color: #eaeaea;
+  border: 1px solid #333;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+.tagBtn__upload__page_New:hover {
+  background: #2e2e2e;
+  transform: scale(1.03);
+}
+
+/* Upload Button */
+.uploadBtn__upload__page_New {
+  padding: 14px;
+  font-size: 15px;
+  background: linear-gradient(135deg, #6366f1, #818cf8);
+  color: white;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  box-shadow: 0 4px 16px rgba(99, 102, 241, 0.3);
+}
+.uploadBtn__upload__page_New:hover {
+  transform: scale(1.02);
+  box-shadow: 0 6px 22px rgba(99, 102, 241, 0.4);
+}
+
+/* Modal */
+.modalBackdrop__upload__page_New {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.85);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+  backdrop-filter: blur(10px);
+}
+.modal__upload__page_New {
+  background: #1d1d1d;
+  padding: 24px 20px;
+  border-radius: 16px;
+  max-width: 360px;
+  width: 90%;
+  color: #eaeaea;
+  text-align: center;
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.05);
+}
+
+/* Modal Buttons */
+.closeModalBtn__upload__page_New {
+  margin-top: 20px;
+  padding: 10px 16px;
+  background: #3b82f6;
+  color: #fff;
+  border: none;
+  font-size: 14px;
+  border-radius: 10px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+.closeModalBtn__upload__page_New:hover {
+  background: #2563eb;
+  transform: scale(1.03);
+}
+
+.successBtn {
+  background: #22c55e !important;
+}
+.backBtn__upload__page_New {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 14px;
+  background: none;
+  border: none;
+  color: #aaa;
+  cursor: pointer;
+  margin-bottom: -10px;
+  transition: all 0.2s ease;
+}
+.backBtn__upload__page_New:hover {
+  color: #fff;
+  transform: translateX(-2px);
+}
+
+.previewWrapper__upload__page_New {
+  margin-top: -10px;
+  text-align: center;
+}
+.previewImage__upload__page_New {
+  width: 100%;
+  max-height: 240px;
+  object-fit: cover;
+  border-radius: 14px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: scale(0.97); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
