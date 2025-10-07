@@ -1,4 +1,4 @@
-const API_URL = 'https://srv594954.hstgr.cloud/fashion'; //https://srv594954.hstgr.cloud //https://4dj9sf39-5000.inc1.devtunnels.ms/
+const API_URL = 'http://localhost:8080/fashion'; //https://srv594954.hstgr.cloud //https://4dj9sf39-5000.inc1.devtunnels.ms/
 
 export const API_ROUTES = {
   baseURL: `${API_URL}`,
