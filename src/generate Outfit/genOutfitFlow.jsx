@@ -13,6 +13,7 @@ const OutfitGenerator = () => {
   const [psychology, setPsychology] = useState({ mood: 5, selfExpression: 5, nostalgia: 5 });
   const [outfits, setOutfits] = useState([]);
   const [loading, setLoading] = useState(false);
+const [errorMsg, setErrorMsg] = useState('');
 
   useEffect(() => {
     const fetchClothes = async () => {
@@ -39,9 +40,9 @@ const OutfitGenerator = () => {
 
 const handleSubmit = async () => {
   setLoading(true);
+  setErrorMsg(''); // reset error
   const formData = new FormData();
 
-  // Append images in the exact order of selectedClothes
   for (const cloth of selectedClothes) {
     const response = await fetch(`${API_ROUTES.displayImg}/${cloth.image}`);
     const blob = await response.blob();
@@ -51,33 +52,41 @@ const handleSubmit = async () => {
   formData.append('activity', activity);
   formData.append('comfort', JSON.stringify(comfort));
   formData.append('psychology', JSON.stringify(psychology));
-
-  // Include cloth_id, hashtag, type, image_name exactly
   formData.append('clothes', JSON.stringify(
     selectedClothes.map(c => ({
       cloth_id: c.cloth_id,
       hashtag: c.hashtag,
       type: c.type || 'unknown',
-      image_name: c.image // important for mapping
+      image_name: c.image
     }))
   ));
-
   formData.append('token', localStorage.getItem('token'));
 
-  try {
-    const res = await axios.post(`${API_ROUTES.baseURL}/generate-outfit`, formData, {
+ try {
+    const res = await axios.post(`${API_ROUTES.baseURL}/fashion/generate-outfit`, formData, {
       headers: { 'Content-Type': 'multipart/form-data' },
     });
 
-    setOutfits(res.data.outfits.outfits); // JSON structure as returned by backend
+    // 🚨 Check for plan restriction
+    if (res.data.success === false && res.data.error) {
+      setErrorMsg(res.data.error);
+      setLoading(false);
+      return;
+    }
+
+    setOutfits(res.data.outfits.outfits);
     setStep(5);
   } catch (err) {
-    console.error(err);
-    alert('Error generating outfit.');
+    if (err.response && err.response.data?.error) {
+      // backend plan error
+      setErrorMsg(err.response.data.error);
+    } else {
+      setErrorMsg('Something went wrong while generating your outfit.');
+    }
   }
+
   setLoading(false);
 };
-
 
   const fade = { initial: { opacity: 0, y: 20 }, animate: { opacity: 1, y: 0 }, exit: { opacity: 0, y: -20 } };
 
@@ -183,6 +192,35 @@ const handleSubmit = async () => {
           </motion.div>
         )}
       </AnimatePresence>
+{errorMsg && (
+  <motion.div
+    initial={{ opacity: 0, scale: 0.95 }}
+    animate={{ opacity: 1, scale: 1 }}
+    exit={{ opacity: 0 }}
+    className="fixed inset-0 flex items-center justify-center bg-black/70 backdrop-blur-md z-50"
+  >
+    <div className="bg-[#1a1a1a] border border-white/10 rounded-2xl p-6 w-[90%] max-w-md text-center shadow-xl">
+      <h2 className="text-lg font-semibold text-white mb-3">Upgrade Required</h2>
+      <p className="text-gray-300 text-sm mb-6">{errorMsg}</p>
+
+      <div className="flex justify-center gap-3">
+        <button
+          onClick={() => window.location.href = '/premium'}
+          className="px-4 py-2 bg-gradient-to-r from-purple-500 to-pink-500 text-white rounded-md text-sm font-medium hover:opacity-90"
+        >
+          Upgrade Plan
+        </button>
+        <button
+          onClick={() => setErrorMsg('')}
+          className="px-4 py-2 bg-white/10 text-gray-300 rounded-md text-sm hover:bg-white/20"
+        >
+          Close
+        </button>
+      </div>
+    </div>
+  </motion.div>
+)}
+
     </div>
   );
 };

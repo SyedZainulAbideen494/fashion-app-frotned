@@ -265,6 +265,9 @@ export default function ClothingUpload() {
   const [previousTags, setPreviousTags] = useState([]);
   const [showUploading, setShowUploading] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
+  const [showPremiumError, setShowPremiumError] = useState(false);
+const [premiumErrorMsg, setPremiumErrorMsg] = useState('');
+
   const nav = useNavigate();
 
   useEffect(() => {
@@ -286,27 +289,38 @@ export default function ClothingUpload() {
     if (selected) setPreviewUrl(URL.createObjectURL(selected));
   };
 
-  const handleUpload = async () => {
-    if (!file || !hashtag.trim()) return alert('Please select an image and enter a hashtag');
-    setShowUploading(true);
+ const handleUpload = async () => {
+  if (!file || !hashtag.trim()) return alert('Please select an image and enter a hashtag');
+  setShowUploading(true);
 
-    setTimeout(async () => {
-      const formData = new FormData();
-      formData.append('image', file);
-      formData.append('hashtag', hashtag.trim());
-      formData.append('token', localStorage.getItem('token'));
+  setTimeout(async () => {
+    const formData = new FormData();
+    formData.append('image', file);
+    formData.append('hashtag', hashtag.trim());
+    formData.append('token', localStorage.getItem('token'));
 
-      try {
-        await Axios.post(`${API_ROUTES.baseURL}/upload/cloths`, formData);
+    try {
+      const res = await Axios.post(`${API_ROUTES.baseURL}/upload/cloths`, formData);
+      if (res.data.success) {
         setShowUploading(false);
         setShowSuccess(true);
-      } catch (err) {
-        console.error('Upload failed:', err);
-        alert('Failed to upload. Please try again.');
+      } else if (res.data.errorMessage) {
+        // Plan restriction or other backend error
         setShowUploading(false);
+        setPremiumErrorMsg(res.data.errorMessage);
+        setShowPremiumError(true);
       }
-    }, 700);
-  };
+    } catch (err) {
+      setShowUploading(false);
+      if (err.response?.data?.errorMessage) {
+        setPremiumErrorMsg(err.response.data.errorMessage);
+        setShowPremiumError(true);
+      } else {
+        alert('Unexpected error occurred. Please try again.');
+      }
+    }
+  }, 700);
+};
 
   return (
     <Page>
@@ -373,6 +387,26 @@ export default function ClothingUpload() {
           </ModalCard>
         </ModalBackdrop>
       )}
+      {showPremiumError && (
+  <ModalBackdrop>
+    <ModalCard>
+      <h3 style={{ margin: 0, color: '#ff7675' }}>Upload Limit Reached 🚫</h3>
+      <p style={{ color: 'var(--muted)', fontSize: '0.9rem' }}>
+        {premiumErrorMsg}
+      </p>
+      <UploadBtn onClick={() => nav('/premium')}>
+        Upgrade Plan
+      </UploadBtn>
+      <UploadBtn
+        style={{ background: 'rgba(255,255,255,0.05)', marginTop: '8px' }}
+        onClick={() => setShowPremiumError(false)}
+      >
+        Close
+      </UploadBtn>
+    </ModalCard>
+  </ModalBackdrop>
+)}
+
     </Page>
   );
 }
