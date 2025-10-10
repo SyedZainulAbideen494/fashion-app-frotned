@@ -206,7 +206,7 @@ const PricingPlans = () => {
     {
       name: "Couture",
       description: "Unlimited premium access",
-      price: 79,
+      price: 1,
       accent: "purple",
       features: [
         { icon: "fa-infinity", text: "Unlimited outfit generation" },
