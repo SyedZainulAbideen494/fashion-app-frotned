@@ -655,31 +655,10 @@ const handleBotSelect = (bot) => {
                       {/* Bot name with special styling for Elara */}
                       <h3 className={`text-lg font-medium ${bot.textColor || 'text-slate-200'} mb-2 ${bot.name === 'Elara' ? 'font-serif tracking-wide' : ''}`}>{bot.name}</h3>
                       {/* Personality traits displayed as small badges */}
-                      <div className="flex gap-2 justify-center mb-3 flex-wrap">
-                        {bot.personality.map((trait, i) => (
-                          <span 
-                            key={i}
-                            className={`px-2 py-1 text-xs ${
-                              // Different styling for each bot's personality badges
-                              bot.name === 'Elara' 
-                                ? 'text-amber-800 bg-amber-100/60 border border-amber-200/40 rounded-full font-medium' 
-                                : bot.name === 'Loom'
-                                ? 'text-teal-700 bg-orange-100/70 border border-orange-200/50 rounded-full font-medium'
-                                : bot.name === 'Jax'
-                                ? 'text-white bg-orange-600/80 border border-orange-500/60 rounded-md font-medium'
-                                : bot.name === 'Sage'
-                                ? 'text-amber-900 bg-green-100/70 border border-green-200/50 rounded-full font-medium'
-                                : bot.name === 'Flare'
-                                ? 'text-yellow-300 bg-purple-900/80 border border-pink-500/60 rounded-md font-medium'
-                                : bot.name === 'Coda'
-                                ? 'text-blue-700 bg-blue-50/80 border border-blue-200/60 rounded-sm font-medium'
-                                : 'text-slate-400 bg-slate-700/30 rounded-md'
-                            }`}
-                          >
-                            {trait}
-                          </span>
-                        ))}
-                      </div>
+                   <p className="text-sm text-slate-300 text-center mb-3">
+  {bot.personality.join(" • ")}
+</p>
+
                     </div>
 
                     {/* Description */}
