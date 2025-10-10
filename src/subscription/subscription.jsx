@@ -193,7 +193,7 @@ const PricingPlans = () => {
     {
       name: "Bespoke",
       description: "Best for most users",
-      price: 29,
+      price: 1,
       accent: "pink",
       highlight: true,
       features: [
