@@ -1291,7 +1291,7 @@ function getGridClass(imageCount) {
           <ChatSystem />
         )}
         
-{activeTab !== 'home' && activeTab !== 'calendar' && activeTab !== 'explore' && (
+{activeTab !== 'home' && activeTab !== 'calendar' && activeTab !== 'explore' && activeTab !== 'shop' && (
   <div className="space-y-8 px-4 py-6 bg-transparent backdrop-blur-sm">
 
     {/* 🧥 Wardrobe Section */}
@@ -1381,6 +1381,12 @@ function getGridClass(imageCount) {
 </div>
 
 
+  </div>
+)}
+
+{activeTab === 'shop' && (
+  <div className="space-y-8 px-4 py-6 bg-transparent backdrop-blur-sm flex items-center justify-center h-full">
+    <span className="text-white text-lg font-medium">Shop Coming Soon 🛍️</span>
   </div>
 )}
 
