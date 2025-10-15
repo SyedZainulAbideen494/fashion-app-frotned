@@ -1,6 +1,8 @@
 import React from "react";
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import { API_ROUTES } from "../app_modules/apiRoutes";
+import { FaArrowLeft } from "react-icons/fa";
+import { useNavigate } from "react-router-dom"; // add this import
 
 const PlanCard = ({ title, description, price, features, accent, highlight, onSelect, isActive, daysLeft, isDowngrade }) => {
   return (
@@ -70,6 +72,7 @@ const PlanCard = ({ title, description, price, features, accent, highlight, onSe
 const PricingPlans = () => {
   const [currentPlan, setCurrentPlan] = React.useState(null);
   const [daysLeft, setDaysLeft] = React.useState(null);
+  const navigate = useNavigate(); // hook for navigation
 
   React.useEffect(() => {
     const fetchCurrentPlan = async () => {
@@ -193,7 +196,7 @@ const PricingPlans = () => {
     {
       name: "Bespoke",
       description: "Best for most users",
-      price: 1,
+      price: 29,
       accent: "pink",
       highlight: true,
       features: [
@@ -206,7 +209,7 @@ const PricingPlans = () => {
     {
       name: "Couture",
       description: "Unlimited premium access",
-      price: 1,
+      price: 79,
       accent: "purple",
       features: [
         { icon: "fa-infinity", text: "Unlimited outfit generation" },
@@ -225,6 +228,13 @@ const PricingPlans = () => {
             Simple, transparent, and designed to scale with you.
           </p>
         </header>
+<button
+  onClick={() => navigate("/")}
+  className="flex items-center gap-2 px-4 py-2 mb-8 rounded-lg text-slate-300 hover:text-white hover:bg-white/10 transition-all duration-300 group"
+>
+  <FaArrowLeft className="text-lg group-hover:-translate-x-1 transition-transform duration-300" />
+  <span className="text-sm font-medium">Back to Home</span>
+</button>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {plans.map((plan, i) => {

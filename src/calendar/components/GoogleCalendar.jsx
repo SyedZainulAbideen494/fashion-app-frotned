@@ -71,7 +71,7 @@ export default function GoogleCalendar() {
   const [events, setEvents] = useState([]);
   const [loading, setLoading] = useState(false);
   // Public calendar API key (no OAuth needed for public calendars)
-  const apiKey = import.meta.env.VITE_GOOGLE_API_KEY;
+  const apiKey = 'AIzaSyBqL0mfheCON7giEzw0_MBKH8FJmr3-bI4';
   const [dayWeather, setDayWeather] = useState(null);
   const [weatherLoading, setWeatherLoading] = useState(false);
   // Cached "today" as YYYY-MM-DD

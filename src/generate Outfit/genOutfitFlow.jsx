@@ -63,7 +63,7 @@ const handleSubmit = async () => {
   formData.append('token', localStorage.getItem('token'));
 
  try {
-    const res = await axios.post(`${API_ROUTES.baseURL}/fashion/generate-outfit`, formData, {
+    const res = await axios.post(`${API_ROUTES.baseURL}/generate-outfit`, formData, {
       headers: { 'Content-Type': 'multipart/form-data' },
     });
 
