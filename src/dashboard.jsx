@@ -80,7 +80,9 @@ function DashboardApp() {
     condition: 'Rainy',    // Weather condition (Sunny, Rainy, etc.)
     location: 'Karnataka'  // User's location
   });
-  
+  // Inside your main component
+const [showProfileModal, setShowProfileModal] = useState(false);
+
   // ===================================================================
   // USER DATA SETUP (PROFILE AND PROGRESS INFORMATION)
   // ===================================================================
@@ -538,6 +540,11 @@ const updateStreak = () => {
       setActiveTab('shop');
       return;
     }
+
+       if (feature === 'profile') {
+setShowProfileModal(true)      
+return;
+    }
     
     // Navigate to closet when Add Item is clicked
     if (feature === 'Add Item') {
@@ -728,12 +735,13 @@ function getGridClass(imageCount) {
           <h1 className="text-lg font-semibold text-white">Hello, There!</h1>
           <p className="text-sm text-slate-300">Your AI Stylist</p>
         </div>
-        <button 
-          onClick={() => handleFeatureClick('Profile')}
-          className="w-12 h-12 bg-slate-800 rounded-full flex items-center justify-center active:scale-95 transition-transform shadow-lg"
-        >
-          <User className="w-6 h-6 text-electric-cyan" />
-        </button>
+       {/* 👤 Profile Button */}
+<button 
+
+  className="w-12 h-12 bg-slate-800/80 rounded-full flex items-center justify-center active:scale-95 transition-transform shadow-lg backdrop-blur-md border border-white/10 hover:bg-slate-700/80"
+>
+  <User className="w-6 h-6 text-electric-cyan" />
+</button>
       </nav>
 
       {/* Main Content */}
