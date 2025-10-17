@@ -67,28 +67,44 @@ const Card = styled.div`
 `;
 
 const BackBtn = styled.button`
-  position: absolute;
-  top: 20px;
-  left: 20px;
-  background: rgba(255,255,255,0.05);
-  border: 1px solid rgba(255,255,255,0.08);
-  backdrop-filter: blur(6px);
-  padding: 8px 12px;
-  border-radius: 10px;
+  position: fixed;
+  top: calc(env(safe-area-inset-top) + 16px);
+  left: calc(env(safe-area-inset-left) + 16px);
+  z-index: 999;
+  background: rgba(255,255,255,0.07);
+  border: 1px solid rgba(255,255,255,0.1);
+  backdrop-filter: blur(8px) saturate(1.1);
+  -webkit-backdrop-filter: blur(8px) saturate(1.1);
+  padding: 10px 14px;
+  border-radius: 12px;
   color: var(--muted);
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 7px;
   cursor: pointer;
-  transition: all 0.2s ease;
-  font-size: 0.9rem;
+  transition: all 0.25s ease;
+  font-size: 0.92rem;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.25);
 
   &:hover {
     color: #fff;
-    transform: translateX(-3px);
-    background: rgba(255,255,255,0.08);
+    background: rgba(255,255,255,0.12);
+    transform: translateX(-3px) scale(1.02);
+  }
+
+  &:active {
+    transform: scale(0.98);
+    background: rgba(255,255,255,0.1);
+  }
+
+  @media (max-width: 768px) {
+    padding: 9px 12px;
+    font-size: 0.88rem;
+    top: calc(env(safe-area-inset-top) + 12px);
+    left: calc(env(safe-area-inset-left) + 12px);
   }
 `;
+
 
 const Title = styled.h2`
   margin-top: 10px;
