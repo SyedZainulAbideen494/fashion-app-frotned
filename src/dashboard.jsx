@@ -737,12 +737,14 @@ function getGridClass(imageCount) {
         </div>
        {/* 👤 Profile Button */}
 <button 
-
+      onClick={() => nav("/premium")}
   className="w-12 h-12 bg-slate-800/80 rounded-full flex items-center justify-center active:scale-95 transition-transform shadow-lg backdrop-blur-md border border-white/10 hover:bg-slate-700/80"
 >
-  <User className="w-6 h-6 text-electric-cyan" />
+  <Crown className="w-6 h-6 text-electric-cyan" />
 </button>
       </nav>
+
+
 
       {/* Main Content */}
       <main className={`flex-1 overflow-y-auto${activeTab === 'explore' ? '' : ' px-4'}`}>
@@ -1450,8 +1452,17 @@ function getGridClass(imageCount) {
       <span className="text-[11px] font-medium">Chat</span>
     </button>
 
-
-
+ 
+    {/* Shop */}
+    <button 
+      onClick={() => handleTabClick('shop')}
+      className={`flex flex-col items-center transition-colors duration-200 ${
+        activeTab === 'shop' ? 'text-hot-pink' : 'text-slate-400 hover:text-slate-300'
+      }`}
+    >
+      <ShoppingBag className="w-6 h-6 mb-0.5" />
+      <span className="text-[11px] font-medium">Shop</span>
+    </button>
 
     {/* Calendar */}
     <button 
@@ -1464,16 +1475,6 @@ function getGridClass(imageCount) {
       <span className="text-[11px] font-medium">Calendar</span>
     </button>
 
-    {/* Premium */}
-    <button 
-      onClick={() => nav("/premium")}
-      className={`flex flex-col items-center transition-colors duration-200 ${
-        activeTab === 'premium' ? 'text-hot-pink' : 'text-slate-400 hover:text-slate-300'
-      }`}
-    >
-      <Crown className="w-6 h-6 mb-0.5" />
-      <span className="text-[11px] font-medium">Premium</span>
-    </button>
   </div>
 </nav>
 
