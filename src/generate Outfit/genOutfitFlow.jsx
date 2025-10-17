@@ -154,11 +154,12 @@ const OutfitGenerator = () => {
                                 : 'border-white/10 hover:border-white/30'
                             }`}
                           >
-                            <img
-                              src={`${API_ROUTES.displayImg}/${cloth.image}`}
-                              alt=""
-                              className="w-full h-40 object-cover rounded-2xl"
-                            />
+                           <img
+  src={`${API_ROUTES.displayImg}/${cloth.image}`}
+  alt=""
+  className="w-full h-40 object-contain rounded-2xl bg-white/5 p-1"
+/>
+
                           </motion.div>
                         ))}
                       </div>
