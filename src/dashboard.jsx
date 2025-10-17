@@ -1450,27 +1450,8 @@ function getGridClass(imageCount) {
       <span className="text-[11px] font-medium">Chat</span>
     </button>
 
-    {/* Outfit */}
-    <button 
-      onClick={() => nav("/generate-outfit")}
-      className={`flex flex-col items-center transition-colors duration-200 ${
-        activeTab === 'shop' ? 'text-hot-pink' : 'text-slate-400 hover:text-slate-300'
-      }`}
-    >
-      <Plus className="w-6 h-6 mb-0.5" />
-      <span className="text-[11px] font-medium">Outfit</span>
-    </button>
 
-    {/* Shop */}
-    <button 
-      onClick={() => handleTabClick('shop')}
-      className={`flex flex-col items-center transition-colors duration-200 ${
-        activeTab === 'shop' ? 'text-hot-pink' : 'text-slate-400 hover:text-slate-300'
-      }`}
-    >
-      <ShoppingBag className="w-6 h-6 mb-0.5" />
-      <span className="text-[11px] font-medium">Shop</span>
-    </button>
+
 
     {/* Calendar */}
     <button 
