@@ -648,6 +648,7 @@ function getGridClass(imageCount) {
         headers: { Authorization: `Bearer ${token}` },
       });
       const data = await res.json();
+      fetchStreakInfo()
       if (!data.alreadyCheckedIn) {
         setStreakInfo((prev) => ({
           ...prev,
