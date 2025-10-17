@@ -1478,30 +1478,7 @@ function getGridClass(imageCount) {
 
   </div>
 </nav>
- <button
-      onClick={() => nav('/generate-outfit')}
-      className="
-        fixed 
-        bottom-28 right-6 
-        w-12 h-12 
-        bg-white/10 
-        backdrop-blur-lg 
-        border border-white/20 
-        rounded-full 
-        flex items-center justify-center 
-        text-white 
-        shadow-[0_8px_30px_rgba(255,255,255,0.1)] 
-        hover:shadow-[0_12px_40px_rgba(255,64,129,0.25)] 
-        hover:bg-white/20 
-        active:scale-90 
-        transition-all 
-        duration-300 
-        z-50
-      "
-      title="Add Outfit"
-    >
-      <FaPlus className="text-lg" />
-    </button>
+
 
       {/* Daily Check-in Modal */}
       <DailyCheckin

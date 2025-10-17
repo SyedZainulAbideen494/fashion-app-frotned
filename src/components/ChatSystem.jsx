@@ -655,10 +655,9 @@ const handleBotSelect = (bot) => {
                       {/* Bot name with special styling for Elara */}
                       <h3 className={`text-lg font-medium ${bot.textColor || 'text-slate-200'} mb-2 ${bot.name === 'Elara' ? 'font-serif tracking-wide' : ''}`}>{bot.name}</h3>
                       {/* Personality traits displayed as small badges */}
-                   <p className="text-sm text-slate-300 text-center mb-3">
+  <p className="text-sm text-black text-center mb-3">
   {bot.personality.join(" • ")}
 </p>
-
                     </div>
 
                     {/* Description */}
