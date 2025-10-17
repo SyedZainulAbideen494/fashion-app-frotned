@@ -179,70 +179,102 @@ const OutfitGenerator = () => {
             )}
 
             {/* STEP 2: Activity */}
-            {step === 2 && (
-              <>
-                <h2 className="text-2xl font-semibold text-white">Choose Activity</h2>
-                <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 w-full">
-                  {['Sports','Office','Party','Religious','Casual','College'].map(opt => (
-                    <button key={opt} className="optionBtnDark" onClick={() => { setActivity(opt); setStep(3); }}>
-                      {opt}
-                    </button>
-                  ))}
-                </div>
-              </>
-            )}
+           {step === 2 && (
+  <div className="flex flex-col items-center justify-center w-full min-h-[60vh] gap-6">
+    <h2 className="text-2xl font-semibold text-white text-center">Choose Activity</h2>
+    <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 w-full max-w-md">
+      {['Sports','Office','Party','Religious','Casual','College'].map(opt => (
+        <button
+          key={opt}
+          className="optionBtnDark"
+          onClick={() => { setActivity(opt); setStep(3); }}
+        >
+          {opt}
+        </button>
+      ))}
+    </div>
+  </div>
+)}
 
-            {/* STEP 3: Comfort */}
-            {step === 3 && (
-              <>
-                <h2 className="text-2xl font-semibold text-white">Comfort Preferences</h2>
-                <div className="sliderContainerDark w-full">
-                  <label>Fit: {comfort.fit}</label>
-                  <input type="range" min="1" max="10" value={comfort.fit} onChange={e => setComfort({ ...comfort, fit: Number(e.target.value) })} />
-                  <label>Movement: {comfort.movement}</label>
-                  <input type="range" min="1" max="10" value={comfort.movement} onChange={e => setComfort({ ...comfort, movement: Number(e.target.value) })} />
-                </div>
-                <button className="primaryBtnDark" onClick={() => setStep(4)}>Next →</button>
-              </>
-            )}
 
-            {/* STEP 4: Psychology */}
-            {step === 4 && (
-              <>
-                <h2 className="text-2xl font-semibold text-white">Mood & Expression</h2>
-                <div className="sliderContainerDark w-full">
-                  <label>Mood: {psychology.mood}</label>
-                  <input type="range" min="1" max="10" value={psychology.mood} onChange={e => setPsychology({ ...psychology, mood: Number(e.target.value) })} />
-                  <label>Self Expression: {psychology.selfExpression}</label>
-                  <input type="range" min="1" max="10" value={psychology.selfExpression} onChange={e => setPsychology({ ...psychology, selfExpression: Number(e.target.value) })} />
-                  <label>Nostalgia: {psychology.nostalgia}</label>
-                  <input type="range" min="1" max="10" value={psychology.nostalgia} onChange={e => setPsychology({ ...psychology, nostalgia: Number(e.target.value) })} />
-                </div>
-                <button className="primaryBtnDark" onClick={handleSubmit}>Generate Outfit</button>
-              </>
-            )}
+{/* STEP 3: Comfort */}
+{step === 3 && (
+  <div className="flex flex-col items-center justify-center w-full min-h-[60vh] gap-6">
+    <h2 className="text-2xl font-semibold text-white text-center">Comfort Preferences</h2>
+    <div className="sliderContainerDark w-full max-w-md flex flex-col gap-4">
+      <div className="flex flex-col gap-1">
+        <label>Fit: {comfort.fit}</label>
+        <input type="range" min="1" max="10" value={comfort.fit} onChange={e => setComfort({ ...comfort, fit: Number(e.target.value) })} />
+      </div>
+      <div className="flex flex-col gap-1">
+        <label>Movement: {comfort.movement}</label>
+        <input type="range" min="1" max="10" value={comfort.movement} onChange={e => setComfort({ ...comfort, movement: Number(e.target.value) })} />
+      </div>
+    </div>
+    <button className="primaryBtnDark" onClick={() => setStep(4)}>Next →</button>
+  </div>
+)}
 
-            {/* STEP 5: Results */}
-            {step === 5 && (
-              <>
-                <h2 className="text-2xl font-semibold text-white">Your Outfit Suggestions</h2>
-                <div className="outfitListDark w-full">
-                  {outfits.map((outfit, i) => (
-                    <div key={i} className="outfitCardDark">
-                      <h4 className="text-white font-medium">{outfit.title}</h4>
-                      <div className="outfitImagesDark">
-                        {outfit.cloth_ids.map(id => {
-                          const cloth = selectedClothes.find(c => c.cloth_id === id);
-                          return cloth && <motion.img key={id} src={`${API_ROUTES.displayImg}/${cloth.image}`} alt="" initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} className="rounded-xl" />;
-                        })}
-                      </div>
-                      {outfit.description && <p className="text-gray-300 text-sm mt-2 italic">{outfit.description}</p>}
-                    </div>
-                  ))}
-                </div>
-                <button className="primaryBtnDark" onClick={() => setStep(1)}>Generate Another</button>
-              </>
-            )}
+{/* STEP 4: Psychology */}
+{step === 4 && (
+  <div className="flex flex-col items-center justify-center w-full min-h-[60vh] gap-6">
+    <h2 className="text-2xl font-semibold text-white text-center">Mood & Expression</h2>
+    <div className="sliderContainerDark w-full max-w-md flex flex-col gap-4">
+      <div className="flex flex-col gap-1">
+        <label>Mood: {psychology.mood}</label>
+        <input type="range" min="1" max="10" value={psychology.mood} onChange={e => setPsychology({ ...psychology, mood: Number(e.target.value) })} />
+      </div>
+      <div className="flex flex-col gap-1">
+        <label>Self Expression: {psychology.selfExpression}</label>
+        <input type="range" min="1" max="10" value={psychology.selfExpression} onChange={e => setPsychology({ ...psychology, selfExpression: Number(e.target.value) })} />
+      </div>
+      <div className="flex flex-col gap-1">
+        <label>Nostalgia: {psychology.nostalgia}</label>
+        <input type="range" min="1" max="10" value={psychology.nostalgia} onChange={e => setPsychology({ ...psychology, nostalgia: Number(e.target.value) })} />
+      </div>
+    </div>
+    <button className="primaryBtnDark" onClick={handleSubmit}>Generate Outfit</button>
+  </div>
+)}
+
+
+           {/* STEP 5: Results */}
+{step === 5 && (
+  <div className="flex flex-col items-center justify-center w-full min-h-[60vh]">
+    <div className="w-full max-w-3xl p-4 bg-white/[0.05] backdrop-blur-2xl border border-white/10 rounded-3xl shadow-lg flex flex-col gap-6 overflow-y-auto max-h-[70vh]">
+      <h2 className="text-2xl font-semibold text-white text-center">Your Outfit Suggestions</h2>
+      {outfits.length > 0 ? (
+        <div className="outfitListDark flex flex-col gap-6">
+          {outfits.map((outfit, i) => (
+            <div key={i} className="outfitCardDark p-4 bg-white/[0.05] backdrop-blur-xl border border-white/10 rounded-2xl flex flex-col items-center gap-4">
+              <h4 className="text-white font-medium text-lg">{outfit.title}</h4>
+              <div className="outfitImagesDark grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3 w-full">
+                {outfit.cloth_ids.map(id => {
+                  const cloth = selectedClothes.find(c => c.cloth_id === id);
+                  return cloth && (
+                    <motion.img
+                      key={id}
+                      src={`${API_ROUTES.displayImg}/${cloth.image}`}
+                      alt=""
+                      initial={{ opacity: 0, scale: 0.9 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      className="w-full h-40 object-contain rounded-xl bg-white/5 p-1"
+                    />
+                  );
+                })}
+              </div>
+              {outfit.description && <p className="text-gray-300 text-sm mt-2 italic text-center">{outfit.description}</p>}
+            </div>
+          ))}
+        </div>
+      ) : (
+        <p className="text-gray-400 text-center mt-10">No outfits generated yet.</p>
+      )}
+      <button className="primaryBtnDark self-center mt-4" onClick={() => setStep(1)}>Generate Another</button>
+    </div>
+  </div>
+)}
+
           </div>
         </motion.div>
       </AnimatePresence>
