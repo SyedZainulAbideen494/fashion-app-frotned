@@ -8,6 +8,7 @@ import DashboardApp from "./dashboard";
 import CalApp from "./calendar/App";
 import WelcomePage from "./assets/welcome";
 import PricingPlans from "./subscription/subscription";
+import DownloadPageAndroid from "./download pages/androidDownload";
 
 
 function App() {
@@ -22,6 +23,7 @@ function App() {
         <Route path="/" element={<DashboardApp/>}/>
         <Route path="/premium" element={<PricingPlans/>}/>
         <Route path="/calendar" element={<CalApp/>}/>
+         <Route path="/android/download" element={<DownloadPageAndroid/>}/>
       </Routes>
     </Router>
   );
