@@ -154,7 +154,7 @@ const PricingPlans = () => {
         key: "rzp_live_jPX6SxetQbApHC",
         amount: amountInPaise,
         currency: "INR",
-        name: "Edusify Premium",
+        name: "Premium",
         description: `${plan.name} Plan`,
         order_id: orderData.id,
         handler: async (response) => {
