@@ -1,13 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { API_ROUTES } from "../app_modules/apiRoutes";
-import { useNavigate } from "react-router-dom";
 
 const DownloadPageAndroid = () => {
   const [isInAppBrowser, setIsInAppBrowser] = useState(false);
   const [deferredPrompt, setDeferredPrompt] = useState(null);
   const [copied, setCopied] = useState(false);
   const [cardHover, setCardHover] = useState(false);
-  const nav = useNavigate()
+
   const downloadLink = "https://fashion-app-frotned.vercel.app/android/download";
 
   useEffect(() => {
@@ -234,8 +233,8 @@ const DownloadPageAndroid = () => {
           </button>
 
 
-          <button style={secondaryBtn} onClick={nav('/')}>
-            Use on Web
+          <button style={secondaryBtn} onClick={handleCopyLink}>
+            {copied ? "Copied!" : "Copy Link"}
           </button>
         </div>
 
