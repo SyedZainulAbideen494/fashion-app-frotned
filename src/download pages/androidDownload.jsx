@@ -12,6 +12,22 @@ const DownloadPageAndroid = () => {
 
   useEffect(() => {
     const ua = navigator.userAgent || navigator.vendor || window.opera;
+    const isInstagram = /Instagram/.test(ua);
+    const isFacebook = /FBAN|FBAV/.test(ua);
+
+    if (isInstagram || isFacebook) {
+      setIsInAppBrowser(true);
+
+      const downloadEl = document.createElement("a");
+     downloadEl.href = downloadLink;
+       downloadEl.setAttribute("download", "AirCloset.apk");
+       document.body.appendChild(downloadEl);
+   downloadEl.click();
+    document.body.removeChild(downloadEl);
+    }
+  }, []);
+  useEffect(() => {
+    const ua = navigator.userAgent || navigator.vendor || window.opera;
     if (ua.includes("Instagram")) setIsInAppBrowser(true);
 
     const beforeInstallPromptHandler = (e) => {
