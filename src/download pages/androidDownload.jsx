@@ -3,41 +3,13 @@ import { API_ROUTES } from "../app_modules/apiRoutes";
 import { useNavigate } from "react-router-dom";
 
 const DownloadPageAndroid = () => {
+  const [isInAppBrowser, setIsInAppBrowser] = useState(false);
   const [deferredPrompt, setDeferredPrompt] = useState(null);
   const [copied, setCopied] = useState(false);
   const [cardHover, setCardHover] = useState(false);
   const nav = useNavigate()
   const downloadLink = "https://fashion-app-frotned.vercel.app/android/download";
-const [isInAppBrowser, setIsInAppBrowser] = useState(false);
-  const [currentUrl, setCurrentUrl] = useState("");
-  const downloadRef = useRef(null); // Reference for the download link
 
-  useEffect(() => {
-    const userAgent = navigator.userAgent || navigator.vendor || window.opera;
-    const isInstagram = /Instagram/.test(userAgent);
-    const isFacebook = /FBAN|FBAV/.test(userAgent);
-
-    setCurrentUrl(window.location.href);
-
-    if (isInstagram || isFacebook) {
-      setIsInAppBrowser(true);
-
-      // Automatically trigger file download before redirecting
-      setTimeout(() => {
-        const downloadLink = document.createElement("a");
-        downloadLink.href = window.location.href;
-        downloadLink.setAttribute("download", "Edusify.html"); // Set actual filename
-        document.body.appendChild(downloadLink);
-        downloadLink.click();
-        document.body.removeChild(downloadLink);
-      }, 500);
-
-      // Redirect user to the default browser after a delay
-      setTimeout(() => {
-        window.location.replace(window.location.href);
-      }, 1500);
-    }
-  }, []);
   useEffect(() => {
     const ua = navigator.userAgent || navigator.vendor || window.opera;
     if (ua.includes("Instagram")) setIsInAppBrowser(true);
