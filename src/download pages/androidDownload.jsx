@@ -234,8 +234,10 @@ const DownloadPageAndroid = () => {
           </button>
 
 
-          <button style={secondaryBtn} onClick={nav('/')}>
-Use on Web          </button>
+<button style={secondaryBtn} onClick={() => nav('/')}>
+  Use on Web
+</button>
+
         </div>
 
         <div style={noteBox}>
