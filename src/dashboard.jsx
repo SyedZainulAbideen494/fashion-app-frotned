@@ -1284,7 +1284,8 @@ function getGridClass(imageCount) {
                 <button 
                   onClick={() => nav("/generate-outfit")}
                   className="btn-primary w-full max-w-xs transition-all duration-200 mt-4 sm:mt-0 shadow-lg"
-                >
+                style={{marginBottom: '40px'}}
+               >
                   Plan My Outfit
                 </button>
               </div>
