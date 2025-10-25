@@ -691,6 +691,48 @@ const handleBotSelect = (bot) => {
     );
   }
 
+
+const formatContent = (content) => {
+  // Format code blocks
+  content = content.replace(/```(.*?)```/gs, "<pre><code>$1</code></pre>");
+  
+  // Format large headers
+  content = content.replace(/## (.*?)(?=\n|\r\n)/g, "<h2 class='large-text'>$1</h2>");
+  
+  // Format bold text (replace "**text**" with "<strong>text</strong>")
+  content = content.replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>");
+  
+  // Format italic text (replace "*text*" with "<em>text</em>")
+  content = content.replace(/\*(.*?)\*/g, "<em>$1</em>");
+  
+  // Format list items
+  content = content.replace(/^\* (.*?)(?=\n|\r\n)/gm, "<li>$1</li>");
+  content = content.replace(/(<li>.*?<\/li>)/g, "<ul>$1</ul>");
+  
+  // Format tables
+  content = content.replace(/((?:\|.*?\|(?:\r?\n|$))+)/g, (match) => {
+    const rows = match.split('\n').filter(row => row.trim());
+    const tableRows = rows.map((row, index) => {
+      const cells = row.split('|').filter(cell => cell.trim());
+      if (index === 0) {
+        const headerContent = cells.map(cell => `<th>${cell.trim()}</th>`).join('');
+        return `<tr>${headerContent}</tr>`;
+      }
+      const rowContent = cells.map(cell => `<td>${cell.trim()}</td>`).join('');
+      return `<tr>${rowContent}</tr>`;
+    }).join('');
+    return `<table>${tableRows}</table>`;
+  });
+
+  // Format LaTeX/math expressions (inline math syntax: $math$ -> MathJax syntax)
+  content = content.replace(/\$(.*?)\$/g, (_, math) => `\\(${math}\\)`);
+
+  // Ensure all remaining asterisks are removed
+  content = content.replace(/\*/g, "");
+
+  return content;
+};
+
   return (
     <>
       <div className="flex flex-col h-full bg-slate-950 overflow-hidden pb-20">
@@ -822,62 +864,74 @@ const handleBotSelect = (bot) => {
         }}
       >
         {/* Loop through all messages and display them */}
-        {messages.map((message) => (
-          <div
-            key={message.id}
-            // Align user messages to the right, bot messages to the left
-            className={`flex ${message.sender === 'user' ? 'justify-end' : 'justify-start'}`}
-          >
-            {/* Bot avatar (only shown for bot messages) */}
-            {message.sender === 'bot' && (
-              <div className={`w-8 h-8 rounded-lg flex items-center justify-center mr-3 mt-1 flex-shrink-0 ${
-                selectedBot.name === 'Elara' ? 'bg-gradient-to-br from-amber-100/20 to-stone-100/20 border border-amber-200/30' 
-                : selectedBot.name === 'Loom' ? 'bg-gradient-to-br from-orange-100/20 to-gray-100/20 border border-teal-300/30'
-                : selectedBot.name === 'Jax' ? 'bg-gradient-to-br from-gray-800/40 to-black/20 border border-orange-500/30'
-                : selectedBot.name === 'Sage' ? 'bg-gradient-to-br from-green-100/20 to-orange-100/20 border border-green-300/30'
-                : selectedBot.name === 'Flare' ? 'bg-gradient-to-br from-purple-900/30 to-gray-900/20 border border-pink-500/30'
-                : selectedBot.name === 'Coda' ? 'bg-gradient-to-br from-blue-100/20 to-gray-100/20 border border-blue-400/30'
-                : 'bg-slate-700/50'
-              }`}>
-                <div className="w-5 h-5">
-                  {selectedBot.avatar}
-                </div>
-              </div>
-            )}
-            <div className={`max-w-[75%] ${
-              message.sender === 'user'
-                ? 'bg-gradient-to-r from-slate-600 to-slate-700 text-slate-100 rounded-2xl rounded-br-md shadow-lg border border-slate-500/30'
-                : selectedBot.name === 'Elara'
-                ? 'bg-gradient-to-br from-amber-50/10 to-stone-50/10 text-amber-100 rounded-2xl rounded-bl-md border border-amber-200/30 shadow-lg'
-                : selectedBot.name === 'Loom'
-                ? 'bg-gradient-to-br from-orange-50/10 to-gray-50/10 text-orange-100 rounded-2xl rounded-bl-md border border-teal-300/30 shadow-lg'
-                : selectedBot.name === 'Jax'
-                ? 'bg-gradient-to-br from-gray-800/50 to-black/30 text-orange-200 rounded-2xl rounded-bl-md border border-orange-500/30 shadow-lg'
-                : selectedBot.name === 'Sage'
-                ? 'bg-gradient-to-br from-green-50/10 to-orange-50/10 text-green-100 rounded-2xl rounded-bl-md border border-green-300/30 shadow-lg'
-                : selectedBot.name === 'Flare'
-                ? 'bg-gradient-to-br from-purple-900/30 to-gray-900/20 text-pink-200 rounded-2xl rounded-bl-md border border-pink-500/30 shadow-lg'
-                : selectedBot.name === 'Coda'
-                ? 'bg-gradient-to-br from-blue-50/10 to-gray-50/10 text-blue-100 rounded-2xl rounded-bl-md border border-blue-400/30 shadow-lg'
-                : 'bg-slate-800/50 text-slate-300 rounded-2xl rounded-bl-md border border-slate-700/50'
-            } px-4 py-3`}>
-              <p className="text-sm leading-relaxed">{message.text}</p>
-              <div className={`text-xs mt-2 ${
-                message.sender === 'user' 
-                  ? 'text-slate-300/70' 
-                  : selectedBot.name === 'Elara' ? 'text-amber-200/60'
-                  : selectedBot.name === 'Loom' ? 'text-orange-200/60'
-                  : selectedBot.name === 'Jax' ? 'text-orange-300/60'
-                  : selectedBot.name === 'Sage' ? 'text-green-200/60'
-                  : selectedBot.name === 'Flare' ? 'text-pink-300/60'
-                  : selectedBot.name === 'Coda' ? 'text-blue-200/60'
-                  : 'text-slate-500'
-              }`}>
-                {message.timestamp.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
-              </div>
-            </div>
+{messages.map((message) => {
+  // Format the message text
+  const formattedText = formatContent(message.text);
+
+  return (
+    <div
+      key={message.id}
+      className={`flex ${message.sender === 'user' ? 'justify-end' : 'justify-start'}`}
+    >
+      {/* Bot avatar (only shown for bot messages) */}
+      {message.sender === 'bot' && (
+        <div className={`w-8 h-8 rounded-lg flex items-center justify-center mr-3 mt-1 flex-shrink-0 ${
+          selectedBot.name === 'Elara' ? 'bg-gradient-to-br from-amber-100/20 to-stone-100/20 border border-amber-200/30' 
+          : selectedBot.name === 'Loom' ? 'bg-gradient-to-br from-orange-100/20 to-gray-100/20 border border-teal-300/30'
+          : selectedBot.name === 'Jax' ? 'bg-gradient-to-br from-gray-800/40 to-black/20 border border-orange-500/30'
+          : selectedBot.name === 'Sage' ? 'bg-gradient-to-br from-green-100/20 to-orange-100/20 border border-green-300/30'
+          : selectedBot.name === 'Flare' ? 'bg-gradient-to-br from-purple-900/30 to-gray-900/20 border border-pink-500/30'
+          : selectedBot.name === 'Coda' ? 'bg-gradient-to-br from-blue-100/20 to-gray-100/20 border border-blue-400/30'
+          : 'bg-slate-700/50'
+        }`}>
+          <div className="w-5 h-5">
+            {selectedBot.avatar}
           </div>
-        ))}
+        </div>
+      )}
+
+      {/* Message bubble */}
+      <div className={`max-w-[75%] ${
+        message.sender === 'user'
+          ? 'bg-gradient-to-r from-slate-600 to-slate-700 text-slate-100 rounded-2xl rounded-br-md shadow-lg border border-slate-500/30'
+          : selectedBot.name === 'Elara'
+          ? 'bg-gradient-to-br from-amber-50/10 to-stone-50/10 text-amber-100 rounded-2xl rounded-bl-md border border-amber-200/30 shadow-lg'
+          : selectedBot.name === 'Loom'
+          ? 'bg-gradient-to-br from-orange-50/10 to-gray-50/10 text-orange-100 rounded-2xl rounded-bl-md border border-teal-300/30 shadow-lg'
+          : selectedBot.name === 'Jax'
+          ? 'bg-gradient-to-br from-gray-800/50 to-black/30 text-orange-200 rounded-2xl rounded-bl-md border border-orange-500/30 shadow-lg'
+          : selectedBot.name === 'Sage'
+          ? 'bg-gradient-to-br from-green-50/10 to-orange-50/10 text-green-100 rounded-2xl rounded-bl-md border border-green-300/30 shadow-lg'
+          : selectedBot.name === 'Flare'
+          ? 'bg-gradient-to-br from-purple-900/30 to-gray-900/20 text-pink-200 rounded-2xl rounded-bl-md border border-pink-500/30 shadow-lg'
+          : selectedBot.name === 'Coda'
+          ? 'bg-gradient-to-br from-blue-50/10 to-gray-50/10 text-blue-100 rounded-2xl rounded-bl-md border border-blue-400/30 shadow-lg'
+          : 'bg-slate-800/50 text-slate-300 rounded-2xl rounded-bl-md border border-slate-700/50'
+      } px-4 py-3`}>
+        {/* Use dangerouslySetInnerHTML to render HTML-formatted text */}
+        <p
+          className="text-sm leading-relaxed prose prose-invert"
+          dangerouslySetInnerHTML={{ __html: formattedText }}
+        />
+
+        <div className={`text-xs mt-2 ${
+          message.sender === 'user' 
+            ? 'text-slate-300/70' 
+            : selectedBot.name === 'Elara' ? 'text-amber-200/60'
+            : selectedBot.name === 'Loom' ? 'text-orange-200/60'
+            : selectedBot.name === 'Jax' ? 'text-orange-300/60'
+            : selectedBot.name === 'Sage' ? 'text-green-200/60'
+            : selectedBot.name === 'Flare' ? 'text-pink-300/60'
+            : selectedBot.name === 'Coda' ? 'text-blue-200/60'
+            : 'text-slate-500'
+        }`}>
+          {message.timestamp.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+        </div>
+      </div>
+    </div>
+  );
+})}
+
         
         {isTyping && (
           <div className="flex justify-start">
