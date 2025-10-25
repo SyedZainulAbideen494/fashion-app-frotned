@@ -691,25 +691,26 @@ const handleBotSelect = (bot) => {
     );
   }
 
-
 const formatContent = (content) => {
-  // Format code blocks
+  // Code blocks
   content = content.replace(/```(.*?)```/gs, "<pre><code>$1</code></pre>");
   
-  // Format large headers
+  // Headers
   content = content.replace(/## (.*?)(?=\n|\r\n)/g, "<h2 class='large-text'>$1</h2>");
   
-  // Format bold text (replace "**text**" with "<strong>text</strong>")
+  // Bold & italic
   content = content.replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>");
-  
-  // Format italic text (replace "*text*" with "<em>text</em>")
   content = content.replace(/\*(.*?)\*/g, "<em>$1</em>");
   
-  // Format list items
-  content = content.replace(/^\* (.*?)(?=\n|\r\n)/gm, "<li>$1</li>");
-  content = content.replace(/(<li>.*?<\/li>)/g, "<ul>$1</ul>");
-  
-  // Format tables
+  // ✅ Bullet lists (handles •, -, * etc)
+  content = content.replace(/(?:^|\n)[•\-\*]\s*(.*?)(?=\n|$)/g, "<li>$1</li>\n");
+  content = content.replace(/(<li>.*?<\/li>\n?)+/g, "<ul>\n$&</ul>\n");
+
+  // ✅ Paragraph breaks (clean spacing between blocks)
+  content = content.replace(/\n{2,}/g, "</p><p>");
+  content = `<p>${content}</p>`;
+
+  // Tables
   content = content.replace(/((?:\|.*?\|(?:\r?\n|$))+)/g, (match) => {
     const rows = match.split('\n').filter(row => row.trim());
     const tableRows = rows.map((row, index) => {
@@ -724,14 +725,12 @@ const formatContent = (content) => {
     return `<table>${tableRows}</table>`;
   });
 
-  // Format LaTeX/math expressions (inline math syntax: $math$ -> MathJax syntax)
+  // Math inline
   content = content.replace(/\$(.*?)\$/g, (_, math) => `\\(${math}\\)`);
-
-  // Ensure all remaining asterisks are removed
-  content = content.replace(/\*/g, "");
 
   return content;
 };
+
 
   return (
     <>
@@ -908,11 +907,16 @@ const formatContent = (content) => {
           ? 'bg-gradient-to-br from-blue-50/10 to-gray-50/10 text-blue-100 rounded-2xl rounded-bl-md border border-blue-400/30 shadow-lg'
           : 'bg-slate-800/50 text-slate-300 rounded-2xl rounded-bl-md border border-slate-700/50'
       } px-4 py-3`}>
-        {/* Use dangerouslySetInnerHTML to render HTML-formatted text */}
-        <p
-          className="text-sm leading-relaxed prose prose-invert"
-          dangerouslySetInnerHTML={{ __html: formattedText }}
-        />
+<div
+  className="text-sm leading-relaxed message-content"
+  style={{
+    marginTop: "4px",
+    marginBottom: "4px",
+    display: "block",
+  }}
+  dangerouslySetInnerHTML={{ __html: formattedText }}
+/>
+
 
         <div className={`text-xs mt-2 ${
           message.sender === 'user' 
